@@ -37,7 +37,31 @@ import { <%= classify(name) %>Service } from './<%= dasherize(name) %>.service';
 
 @Injectable()
 export class <%= classify(name) %>Effects {
-
+  <% if (firestore) { %>
+  // ========================================= QUERY
+  @Effect()
+  query:  Observable<Action> = this.actions$
+      .pipe(
+        ofType<QueryProject>(ProjectActionTypes.QueryProject),
+        switchMap(() => {
+          return this.service.query();
+        }),
+        mergeMap(actions => actions),
+        map(action => {
+          console.log(action.payload.doc.data())
+          return {
+            type: `[Project] ${action.type}`,
+            payload: {
+              ...action.payload.doc.data(),
+              id: action.payload.doc.id
+            }
+          };
+        }),
+        catchError(({ message }) =>
+          of(new QueryProjectFail({ error: message }))
+        )
+      )
+  <% } %>
   // ========================================= CREATE
   @Effect()
   create: Observable<Action> = this.actions$
@@ -53,6 +77,7 @@ export class <%= classify(name) %>Effects {
       )
     );
 
+  <% if (!firestore) { %>
   // ========================================= SEARCH
   @Effect()
   search: Observable<Action> = this.actions$
@@ -71,7 +96,7 @@ export class <%= classify(name) %>Effects {
         )
       )
     );
-
+  <% } %>
   // ========================================= LOAD BY ID
   @Effect()
   loadById: Observable<Action> = this.actions$
@@ -117,7 +142,7 @@ export class <%= classify(name) %>Effects {
       ofType<Delete<%= classify(name) %>ById>(<%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ById),
       exhaustMap((action) =>
         this.service.deleteById(action.payload.id).pipe(
-          map((id: number) => new Delete<%= classify(name) %>ByIdSuccess({ id })),
+          map((id: string) => new Delete<%= classify(name) %>ByIdSuccess({ id })),
           catchError(({ message }) =>
             of(new Delete<%= classify(name) %>ByIdFail({ error: message }))
           )
