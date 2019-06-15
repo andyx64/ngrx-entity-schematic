@@ -11,7 +11,6 @@ import {from, Observable, of, pipe} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
 import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
 import {AngularFirestore} from '@angular/fire/firestore';
-import {classify} from "@angular-devkit/core/src/utils/strings";
 
 
 @Injectable({
