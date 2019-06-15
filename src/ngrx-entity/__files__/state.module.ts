@@ -26,8 +26,6 @@ import { <%= classify(name) %>Effects } from './<%= dasherize(name) %>/<%= dashe
     EffectsModule.forRoot([<%= classify(name) %>Effects]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
-    AngularFireAuthModule, // auth
-    AngularFireStorageModule,
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
   declarations: []

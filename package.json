@@ -1,12 +1,8 @@
 {
-  "name": "@briebug/ngrx-entity-schematic",
-  "version": "0.2.0",
-  "description": "An Angular schematic for quickly scaffolding NgRx Entities with actions, effects, reducer, model, service, and passing specs.",
-  "author": "Kevin Schuchard <schuchard.kevin@gmail.com>",
-  "contributors": [
-    "Reid Villeneuve <reidsvilleneuve@gmail.com>",
-    "Jamie Perkins <http://inorganik.net>"
-  ],
+  "name": "@ngrx/firestore",
+  "version": "0.1.0",
+  "description": "An Angular schematic for quickly scaffolding NgRx and Firestore",
+  "author": "Andreas Caldewei <Andreas.Caldewei@Outlook.de>",
   "main": "src/ngrx-entity/index.js",
   "schematics": "./src/collection.json",
   "license": "MIT",
@@ -21,7 +17,9 @@
     "test:ci": "yarn clean:build:launch briebug --init --path src/app/state && yarn test:sandbox && yarn clean",
     "test:sandbox": "cd sandbox-app && yarn lint && yarn test && yarn e2e && yarn build",
     "link:schematic": "yarn link && cd sandbox-app && yarn link @briebug/ngrx-entity-schematic",
-    "release": "yarn clean && yarn build:schematic && yarn np"
+    "release": "yarn clean && yarn build:schematic && yarn np",
+    "build-package": "npm run lib:build:prod && npm run schematics:copy"
+
   },
   "dependencies": {
     "@angular-devkit/core": "^7.0.2",
