@@ -1,11 +1,11 @@
 export interface <%= classify(name) %> {
-  id: number;
+  id: string;
   name: string;
   description: string;
 }
 
 // for testing
-
+/*
 export const generate<%= classify(name) %> = (idOverride?: number): <%= classify(name) %> => ({
   id: idOverride || (Math.floor(Math.random() * 100) + 1),
   name: 'Test name',
@@ -26,3 +26,4 @@ export const generate<%= classify(name) %>Map = (
   ids: <%= name %>Array.map(<%= name %> => <%= name %>.id)
 });
 
+/*
