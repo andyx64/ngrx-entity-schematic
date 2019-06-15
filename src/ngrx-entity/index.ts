@@ -39,6 +39,8 @@ function updateDependencies(): Rule {
     context.addTask(new NodePackageInstallTask());
 
     const addDependencies = of(
+      "@angular/fire",
+      "firbase",
       "@ngrx/store",
       "@ngrx/entity",
       "@ngrx/effects",

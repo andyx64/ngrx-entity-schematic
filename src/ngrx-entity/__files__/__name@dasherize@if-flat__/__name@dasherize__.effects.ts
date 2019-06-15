@@ -6,7 +6,8 @@ import {
   map,
   catchError,
   tap,
-  switchMap
+  switchMap,
+  mergeMap
 } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Action } from '@ngrx/store';
@@ -14,12 +15,18 @@ import { Update } from '@ngrx/entity';
 
 import {
   <%= classify(name) %>ActionTypes,
+  <% if (firestore) { %>
+  Query<%= classify(name) %>,
+  Query<%= classify(name) %>Fail,
+  <% } %>
   Create<%= classify(name) %>,
   Create<%= classify(name) %>Success,
   Create<%= classify(name) %>Fail,
+  <% if (!firestore) { %>
   SearchAll<%= classify(name) %>Entities,
   SearchAll<%= classify(name) %>EntitiesSuccess,
   SearchAll<%= classify(name) %>EntitiesFail,
+  <% } %>
   Load<%= classify(name) %>ById,
   Load<%= classify(name) %>ByIdSuccess,
   Load<%= classify(name) %>ByIdFail,
@@ -42,7 +49,7 @@ export class <%= classify(name) %>Effects {
   @Effect()
   query:  Observable<Action> = this.actions$
       .pipe(
-        ofType<QueryProject>(ProjectActionTypes.QueryProject),
+        ofType<Query<%= classify(name) %>>(<%= classify(name) %>ActionTypes.Query<%= classify(name) %>),
         switchMap(() => {
           return this.service.query();
         }),
@@ -50,7 +57,7 @@ export class <%= classify(name) %>Effects {
         map(action => {
           console.log(action.payload.doc.data())
           return {
-            type: `[Project] ${action.type}`,
+            type: `[<%= classify(name) %>] ${action.type}`,
             payload: {
               ...action.payload.doc.data(),
               id: action.payload.doc.id
@@ -58,7 +65,7 @@ export class <%= classify(name) %>Effects {
           };
         }),
         catchError(({ message }) =>
-          of(new QueryProjectFail({ error: message }))
+          of(new Query<%= classify(name) %>Fail({ error: message }))
         )
       )
   <% } %>

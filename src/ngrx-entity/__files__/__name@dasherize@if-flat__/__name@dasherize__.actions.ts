@@ -46,17 +46,17 @@ export enum <%= classify(name) %>ActionTypes {
     constructor() {}
   }
 
-  export class Query<%= classify(name) %>Added {
+  export class Query<%= classify(name) %>Added implements Action {
     readonly type = <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Added;
     constructor(public payload: <%= classify(name) %>) {}
   }
 
-  export class Query<%= classify(name) %>Modified {
+  export class Query<%= classify(name) %>Modified implements Action {
     readonly type = <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Modified;
     constructor(public payload: <%= classify(name) %>) {}
   }
 
-  export class Query<%= classify(name) %>Removed {
+  export class Query<%= classify(name) %>Removed implements Action {
     readonly type = <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Removed;
     constructor(public payload: <%= classify(name) %>) {}
   }
@@ -105,7 +105,7 @@ export class SearchAll<%= classify(name) %>EntitiesFail implements Action {
 
 export class Load<%= classify(name) %>ById implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>ById;
-  constructor(public payload: { id: number }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export class Load<%= classify(name) %>ByIdSuccess implements Action {
@@ -139,12 +139,12 @@ export class Update<%= classify(name) %>Fail implements Action {
 
 export class Delete<%= classify(name) %>ById implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ById;
-  constructor(public payload: { id: number }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export class Delete<%= classify(name) %>ByIdSuccess implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ByIdSuccess;
-  constructor(public payload: { id: number }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export class Delete<%= classify(name) %>ByIdFail implements Action {
@@ -163,7 +163,7 @@ export class SetSearchQuery implements Action {
 
 export class Select<%= classify(name) %>ById implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Select<%= classify(name) %>ById;
-  constructor(public payload: { id: number }) {}
+  constructor(public payload: { id: string }) {}
 }
 
 export type <%= classify(name) %>Actions =

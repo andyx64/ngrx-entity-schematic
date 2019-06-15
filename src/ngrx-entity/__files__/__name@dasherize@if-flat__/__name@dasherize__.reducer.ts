@@ -11,7 +11,7 @@ export interface <%= classify(name) %>SearchQuery {
 
 export interface <%= classify(name) %>State extends EntityState<<%= classify(name) %>> {
   // additional entities state properties
-  selectedId: number;
+  selectedId: string;
   loading: boolean;
   error: string;
   query: <%= classify(name) %>SearchQuery;
@@ -37,16 +37,16 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
     <% if (firestore) { %>
     case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Added:
       console.log(action)
-      return <%= classify(name) %>Adapter.addOne(action.payload, state);
+      return <%= name %>Adapter.addOne(action.payload, state);
 
     case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Modified:
-      return <%= classify(name) %>Adapter.updateOne({
+      return <%= name %>Adapter.updateOne({
         id: action.payload.id,
         changes: action.payload
       }, state)
 
     case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Removed:
-      return <%= classify(name) %>Adapter.removeOne(action.payload.id, state)
+      return <%= name %>Adapter.removeOne(action.payload.id, state)
 
     case  <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Fail:
       return {
@@ -65,8 +65,8 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
 
     case <%= classify(name) %>ActionTypes.Create<%= classify(name) %>Success:
       return {
-        <& if (firestore) { >
-        ...state
+        <% if (firestore) { %>
+        ...state,
         <% } else { %>
         ...<%= name %>Adapter.addOne(action.payload.result, state),
         <% } %>
@@ -81,7 +81,7 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
         error: '<%= classify(name) %> create failed: ' + action.payload.error
       };
 
-    <% if (!firestore) %>
+    <% if (!firestore) { %>
     case <%= classify(name) %>ActionTypes.SearchAll<%= classify(name) %>Entities:
       return {
         ...<%= name %>Adapter.removeAll(state),
@@ -134,8 +134,8 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
 
     case <%= classify(name) %>ActionTypes.Update<%= classify(name) %>Success:
       return {
-        <& if (firestore) { >
-        ...state
+        <% if (firestore) { %>
+        ...state,
         <% } else { %>
         ...<%= name %>Adapter.updateOne(action.payload.update, state),
         <% } %>
@@ -160,8 +160,8 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
 
     case <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ByIdSuccess:
         return {
-        <& if (firestore) { >
-        ...state
+        <% if (firestore) { %>
+        ...state,
         <% } else { %>
         ...<%= name %>Adapter.removeOne(action.payload.id, state),
         <% } %>
