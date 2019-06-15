@@ -28,6 +28,7 @@ import {
 } from "./utility/dependencies";
 
 export default function(options: NgRxOptions): Rule {
+  options.name.toLowerCase()
   return (tree: Tree, context: SchematicContext) => {
     return chain([addNgRxFiles(options), updateDependencies()])(tree, context);
   };

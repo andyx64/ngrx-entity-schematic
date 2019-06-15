@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
-import { <%= classify(name) %>SearchQuery } from './<%= dasherize(name) %>.reducer';
 
 export enum <%= classify(name) %>ActionTypes {
 

@@ -4,10 +4,8 @@ import { <%= classify(name) %>Actions, <%= classify(name) %>ActionTypes } from '
 
 export interface <%= classify(name) %>State extends EntityState<<%= classify(name) %>> {
   // additional entities state properties
-  selectedId: string;
   loading: boolean;
   error: string;
-  query: <%= classify(name) %>SearchQuery;
 }
 
 export const <%= name %>Adapter: EntityAdapter<<%= classify(name) %>> = createEntityAdapter<<%= classify(name) %>>();
@@ -20,7 +18,6 @@ export const initial<%= classify(name)%>State: <%= classify(name) %>State = <%= 
 
 export function <%= name %>Reducer(state = initial<%= classify(name)%>State, action: <%= classify(name) %>Actions): <%= classify(name) %>State {
   switch (action.type) {
-    <% if (firestore) { %>
     case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Added:
       console.log(action)
       return <%= name %>Adapter.addOne(action.payload, state);
@@ -40,7 +37,6 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
         loading: false,
         error: '<%= classify(name) %> query failed: ' + action.payload.error
       };
-    <% } %>
 
     case <%= classify(name) %>ActionTypes.Create<%= classify(name) %>:
       return {
@@ -87,7 +83,6 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
     case <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ById:
       return {
         ...state,
-        selectedId: action.payload.id,
         loading: true,
         error: ''
       };
@@ -95,7 +90,6 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
     case <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ByIdSuccess:
         return {
         ...state,
-        ...<%= name %>Adapter.removeOne(action.payload.id, state),
         loading: false,
         error: ''
       };
