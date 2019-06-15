@@ -34,6 +34,28 @@ export const initial<%= classify(name)%>State: <%= classify(name) %>State = <%= 
 
 export function <%= name %>Reducer(state = initial<%= classify(name)%>State, action: <%= classify(name) %>Actions): <%= classify(name) %>State {
   switch (action.type) {
+    <% if (firestore) { %>
+    case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Added:
+      console.log(action)
+      return <%= classify(name) %>Adapter.addOne(action.payload, state);
+
+    case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Modified:
+      return <%= classify(name) %>Adapter.updateOne({
+        id: action.payload.id,
+        changes: action.payload
+      }, state)
+
+    case <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Removed:
+      return <%= classify(name) %>Adapter.removeOne(action.payload.id, state)
+
+    case  <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Fail:
+      return {
+        ...state,
+        loading: false,
+        error: '<%= classify(name) %> query failed: ' + action.payload.error
+      };
+    <% } %>
+
     case <%= classify(name) %>ActionTypes.Create<%= classify(name) %>:
       return {
         ...state,
@@ -43,7 +65,11 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
 
     case <%= classify(name) %>ActionTypes.Create<%= classify(name) %>Success:
       return {
+        <& if (firestore) { >
+        ...state
+        <% } else { %>
         ...<%= name %>Adapter.addOne(action.payload.result, state),
+        <% } %>
         loading: false,
         error: ''
       };
@@ -55,6 +81,7 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
         error: '<%= classify(name) %> create failed: ' + action.payload.error
       };
 
+    <% if (!firestore) %>
     case <%= classify(name) %>ActionTypes.SearchAll<%= classify(name) %>Entities:
       return {
         ...<%= name %>Adapter.removeAll(state),
@@ -75,7 +102,7 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
         loading: false,
         error: '<%= classify(name) %> search failed: ' + action.payload.error
       };
-
+    <% } %>
     case <%= classify(name) %>ActionTypes.Load<%= classify(name) %>ById:
       return {
         ...<%= name %>Adapter.removeAll(state),
@@ -107,7 +134,11 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
 
     case <%= classify(name) %>ActionTypes.Update<%= classify(name) %>Success:
       return {
+        <& if (firestore) { >
+        ...state
+        <% } else { %>
         ...<%= name %>Adapter.updateOne(action.payload.update, state),
+        <% } %>
         loading: false,
         error: ''
       };
@@ -128,8 +159,12 @@ export function <%= name %>Reducer(state = initial<%= classify(name)%>State, act
       };
 
     case <%= classify(name) %>ActionTypes.Delete<%= classify(name) %>ByIdSuccess:
-      return {
+        return {
+        <& if (firestore) { >
+        ...state
+        <% } else { %>
         ...<%= name %>Adapter.removeOne(action.payload.id, state),
+        <% } %>
         loading: false,
         error: ''
       };
