@@ -11,8 +11,4 @@ export interface Schema {
    * Should setup NgRx.
    */
   init?: boolean;
-  /**
-   * Should setup Firestore.
-   */
-  firestore?: boolean
 }

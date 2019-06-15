@@ -27,12 +27,6 @@
       "description": "Flag to setup NgRx.",
       "default": false,
       "x-prompt": "Add initalization files?"
-    },
-    "firestore": {
-      "type": "boolean",
-      "description": "Flag to setup Firestore.",
-      "default": false,
-      "x-prompt": "Add Firestore support?"
     }
   },
   "required": []

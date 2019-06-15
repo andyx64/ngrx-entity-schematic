@@ -40,7 +40,7 @@ function updateDependencies(): Rule {
 
     const addDependencies = of(
       "@angular/fire",
-      "firbase",
+      "firebase",
       "@ngrx/store",
       "@ngrx/entity",
       "@ngrx/effects",

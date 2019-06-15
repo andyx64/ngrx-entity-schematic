@@ -4,27 +4,16 @@ import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
 import { <%= classify(name) %>SearchQuery } from './<%= dasherize(name) %>.reducer';
 
 export enum <%= classify(name) %>ActionTypes {
-  <% if (firestore) { %>
+
   Query<%= classify(name) %> = '[<%= classify(name) %>] Query',
   Query<%= classify(name) %>Added = '[<%= classify(name) %>] added',
   Query<%= classify(name) %>Modified = '[<%= classify(name) %>] modified',
   Query<%= classify(name) %>Removed = '[<%= classify(name) %>] removed',
   Query<%= classify(name) %>Fail = '[<%= classify(name) %>] Query Fail',
-  <% } %>
 
   Create<%= classify(name) %> = '[<%= classify(name) %>] Create',
   Create<%= classify(name) %>Success = '[<%= classify(name) %>] Insert Success',
   Create<%= classify(name) %>Fail = '[<%= classify(name) %>] Insert Fail',
-
-  <% if (!firestore) { %>
-  SearchAll<%= classify(name) %>Entities = '[<%= classify(name) %>] Search',
-  SearchAll<%= classify(name) %>EntitiesSuccess = '[<%= classify(name) %>] Search Success',
-  SearchAll<%= classify(name) %>EntitiesFail = '[<%= classify(name) %>] Search Fail',
-  <% } %>
-
-  Load<%= classify(name) %>ById = '[<%= classify(name) %>] Load By ID',
-  Load<%= classify(name) %>ByIdSuccess = '[<%= classify(name) %>] Load Success',
-  Load<%= classify(name) %>ByIdFail = '[<%= classify(name) %>] Load Fail',
 
   Update<%= classify(name) %> = '[<%= classify(name) %>] Update',
   Update<%= classify(name) %>Success = '[<%= classify(name) %>] Update Success',
@@ -34,13 +23,10 @@ export enum <%= classify(name) %>ActionTypes {
   Delete<%= classify(name) %>ByIdSuccess = '[<%= classify(name) %>] Delete Success',
   Delete<%= classify(name) %>ByIdFail = '[<%= classify(name) %>] Delete Fail',
 
-  SetSearchQuery = '[<%= classify(name) %>] Set Search Query',
-  Select<%= classify(name) %>ById = '[<%= classify(name) %>] Select By ID'
 }
 
-<% if (firestore) { %>
-  // ========================================= QUERY
 
+  // ========================================= QUERY
   export class Query<%= classify(name) %> implements Action {
     readonly type = <%= classify(name) %>ActionTypes.Query<%= classify(name) %>;
     constructor() {}
@@ -65,9 +51,8 @@ export enum <%= classify(name) %>ActionTypes {
     readonly type = <%= classify(name) %>ActionTypes.Query<%= classify(name) %>Fail;
     constructor(public payload: { error: string }) {}
   }
-<% } %>
-// ========================================= CREATE
 
+// ========================================= CREATE
 export class Create<%= classify(name) %> implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Create<%= classify(name) %>;
   constructor(public payload: { <%= name %>: <%= classify(name) %> }) {}
@@ -80,41 +65,6 @@ export class Create<%= classify(name) %>Success implements Action {
 
 export class Create<%= classify(name) %>Fail implements Action {
   readonly type = <%= classify(name) %>ActionTypes.Create<%= classify(name) %>Fail;
-  constructor(public payload: { error: string }) {}
-}
-
-// ========================================= SEARCH
-
-<% if (!firestore) { %>
-export class SearchAll<%= classify(name) %>Entities implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.SearchAll<%= classify(name) %>Entities;
-}
-
-export class SearchAll<%= classify(name) %>EntitiesSuccess implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.SearchAll<%= classify(name) %>EntitiesSuccess;
-  constructor(public payload: { result: Array<<%= classify(name) %>> }) {}
-}
-
-export class SearchAll<%= classify(name) %>EntitiesFail implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.SearchAll<%= classify(name) %>EntitiesFail;
-  constructor(public payload: { error: string }) {}
-}
-<% } %>
-
-// ========================================= LOAD BY ID
-
-export class Load<%= classify(name) %>ById implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>ById;
-  constructor(public payload: { id: string }) {}
-}
-
-export class Load<%= classify(name) %>ByIdSuccess implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>ByIdSuccess;
-  constructor(public payload: { result: <%= classify(name) %> }) {}
-}
-
-export class Load<%= classify(name) %>ByIdFail implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.Load<%= classify(name) %>ByIdFail;
   constructor(public payload: { error: string }) {}
 }
 
@@ -152,44 +102,24 @@ export class Delete<%= classify(name) %>ByIdFail implements Action {
   constructor(public payload: { error: string }) {}
 }
 
-// ========================================= QUERY
 
-export class SetSearchQuery implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.SetSearchQuery;
-  constructor(public payload: Partial<<%= classify(name) %>SearchQuery>) {}
-}
-
-// ========================================= SELECTED ID
-
-export class Select<%= classify(name) %>ById implements Action {
-  readonly type = <%= classify(name) %>ActionTypes.Select<%= classify(name) %>ById;
-  constructor(public payload: { id: string }) {}
-}
 
 export type <%= classify(name) %>Actions =
-  <% if (firestore) { %>
+
     Query<%= classify(name) %>
   | Query<%= classify(name) %>Added
   | Query<%= classify(name) %>Modified
   | Query<%= classify(name) %>Removed
   | Query<%= classify(name) %>Fail
-  <% } %>
+
   | Create<%= classify(name) %>
   | Create<%= classify(name) %>Success
   | Create<%= classify(name) %>Fail
-  <% if (!firestore) {  %>
-  | SearchAll<%= classify(name) %>Entities
-  | SearchAll<%= classify(name) %>EntitiesSuccess
-  | SearchAll<%= classify(name) %>EntitiesFail
-  <%  }  %>
-  | Load<%= classify(name) %>ById
-  | Load<%= classify(name) %>ByIdSuccess
-  | Load<%= classify(name) %>ByIdFail
+
   | Update<%= classify(name) %>
   | Update<%= classify(name) %>Success
   | Update<%= classify(name) %>Fail
+
   | Delete<%= classify(name) %>ById
   | Delete<%= classify(name) %>ByIdSuccess
-  | Delete<%= classify(name) %>ByIdFail
-  | SetSearchQuery
-  | Select<%= classify(name) %>ById;
+  | Delete<%= classify(name) %>ByIdFail;
