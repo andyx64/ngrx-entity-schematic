@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "BriebugSchematicsNgRxEntity",
+  "id": "Andyx64SchematicsNgRxFirestoreEntity",
   "title": "NgRx Generator Options Schema",
   "type": "object",
   "properties": {
