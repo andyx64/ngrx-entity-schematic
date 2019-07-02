@@ -3,13 +3,13 @@
   "schematics": {
     "ng-add": {
       "description": "Generates all NgRx Entity files for an application",
-      "factory": "./ngrx-entity/index",
-      "schema": "./ngrx-entity/schema.json"
+      "factory": "./ngrx-firestore/index",
+      "schema": "./ngrx-firestore/schema.json"
     },
     "add": {
       "description": "Generates all NgRx Entity files for an application",
-      "factory": "./ngrx-entity/index",
-      "schema": "./ngrx-entity/schema.json"
+      "factory": "./ngrx-firestore/index",
+      "schema": "./ngrx-firestore/schema.json"
     }
   }
 }

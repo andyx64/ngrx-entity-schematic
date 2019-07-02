@@ -1,9 +1,9 @@
 {
   "name": "@andyx64/ngrx-firestore",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "An Angular schematic for quickly scaffolding NgRx and Firestore",
   "author": "Andreas Caldewei <Andreas.Caldewei@Outlook.de>",
-  "main": "src/@ngrx-firestore/index.js",
+  "main": "src/ngrx-firestore/index.js",
   "schematics": "./src/collection.json",
   "license": "MIT",
   "scripts": {
@@ -16,7 +16,7 @@
     "test": "yarn clean:build:launch briebug --init --path src/app/state && yarn test:sandbox && yarn clean",
     "test:ci": "yarn clean:build:launch briebug --init --path src/app/state && yarn test:sandbox && yarn clean",
     "test:sandbox": "cd sandbox-app && yarn lint && yarn test && yarn e2e && yarn build",
-    "link:schematic": "yarn link && cd sandbox-app && yarn link @briebug/ngrx-entity-schematic",
+    "link:schematic": "yarn link && cd sandbox-app && yarn link @andyx64/ngrx-firestore",
     "release": "yarn clean && yarn build:schematic && yarn np",
     "build-package": "npm run lib:build:prod && npm run schematics:copy"
 
@@ -47,14 +47,6 @@
   },
   "engines": {
     "node": ">=8.11.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/briebug/ngrx-entity-schematic"
-  },
-  "bugs": "https://github.com/briebug/ngrx-entity-schematic/issues",
-  "publishConfig": {
-    "access": "public"
   },
   "keywords": [
     "angular",
