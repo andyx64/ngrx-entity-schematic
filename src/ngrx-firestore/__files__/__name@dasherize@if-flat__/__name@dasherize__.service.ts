@@ -16,7 +16,7 @@ import {AngularFirestore} from '@angular/fire/firestore';
 @Injectable({
   providedIn: 'root'
 })
-export class <%= classify(name) %>Service {
+export class <%= classify(name) %>FetchService {
   <%= name %>Collection = this.af.collection<<%= classify(name) %>>('<%= name %>s')
 
   constructor(private httpClient: HttpClient, private af: AngularFirestore) {}

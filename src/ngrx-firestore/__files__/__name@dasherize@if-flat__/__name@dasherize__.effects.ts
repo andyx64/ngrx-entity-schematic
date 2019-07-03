@@ -33,7 +33,7 @@ import {
 
 } from './<%= dasherize(name) %>.actions';
 import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
-import { <%= classify(name) %>Service } from './<%= dasherize(name) %>.service';
+import { <%= classify(name) %>FetchService } from './<%= dasherize(name) %>.service';
 
 @Injectable()
 export class <%= classify(name) %>Effects {
@@ -115,5 +115,5 @@ export class <%= classify(name) %>Effects {
 
 
 
-  constructor(private actions$: Actions, private service: <%= classify(name) %>Service) {}
+  constructor(private actions$: Actions, private service: <%= classify(name) %>FetchService) {}
 }
