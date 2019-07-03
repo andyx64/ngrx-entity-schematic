@@ -1,6 +1,6 @@
 {
   "name": "@andyx64/ngrx-firestore",
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "An Angular schematic for quickly scaffolding NgRx and Firestore",
   "author": "Andreas Caldewei <Andreas.Caldewei@Outlook.de>",
   "main": "src/ngrx-firestore/index.js",

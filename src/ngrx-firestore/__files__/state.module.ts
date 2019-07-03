@@ -21,7 +21,9 @@ import { <%= classify(name) %>Effects } from './<%= dasherize(name) %>/<%= dashe
   imports: [
     CommonModule,
     HttpClientModule,
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomRouterStateSerializer
+    }),
     StoreModule.forRoot(appReducer, { metaReducers: appMetaReducers }),
     EffectsModule.forRoot([<%= classify(name) %>Effects]),
     AngularFireModule.initializeApp(environment.firebaseConfig),

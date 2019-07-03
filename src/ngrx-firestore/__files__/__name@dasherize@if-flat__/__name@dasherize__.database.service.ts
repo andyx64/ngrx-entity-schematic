@@ -1,22 +1,16 @@
-/*
- * TODO:
- * This file should not remain in the state folder. Move it to somewhere within
- * your app code.
- */
-
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import {from, Observable, of, pipe} from 'rxjs';
 import {map, switchMap} from 'rxjs/operators';
-import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
+import { <%= classify(name) %> } from './<%= name %>.model';
 import {AngularFirestore} from '@angular/fire/firestore';
 
 
 @Injectable({
   providedIn: 'root'
 })
-export class <%= classify(name) %>FetchService {
+export class <%= classify(name) %>DatabaseService {
   <%= name %>Collection = this.af.collection<<%= classify(name) %>>('<%= name %>s')
 
   constructor(private httpClient: HttpClient, private af: AngularFirestore) {}
@@ -25,7 +19,7 @@ export class <%= classify(name) %>FetchService {
     return this.<%= name %>Collection.stateChanges();
   }
 
-  create(<%= name %>: <%= classify(name)%>): Observable<<%= classify(name) %>> {
+  create(<%= name %>: <%= classify(name) %>): Observable<<%= classify(name) %>> {
     return from(this.<%= name %>Collection.add(<%= name %>)).pipe(map(() => <%= name %>));
   }
 
@@ -34,7 +28,7 @@ export class <%= classify(name) %>FetchService {
   }
 
   deleteById(id: string): Observable<string> {
-      return from(this.<%= name %>Collection.doc(id).delete()).pipe( map (() => id));
+    return from(this.<%= name %>Collection.doc(id).delete()).pipe( map (() => id));
   }
 
 }

@@ -1,10 +1,10 @@
 import { RouterReducerState } from '@ngrx/router-store';
 import { RouterStateUrl } from './state-utils';
-import { TestState } from './test/test.reducer';
+import { AccountState } from './account/account.reducer';
 
 export interface AppState {
   router: RouterReducerState<RouterStateUrl>;
-  test: TestState;
+  account: AccountState;
 }
 
 export type State = AppState;

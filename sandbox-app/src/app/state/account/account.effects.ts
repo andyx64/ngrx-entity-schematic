@@ -14,34 +14,34 @@ import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
 
 import {
-  TestActionTypes,
-  QueryTest,
-  QueryTestFail,
+  AccountActionTypes,
+  QueryAccount,
+  QueryAccountFail,
 
-  CreateTest,
-  CreateTestSuccess,
-  CreateTestFail,
+  CreateAccount,
+  CreateAccountSuccess,
+  CreateAccountFail,
 
-  UpdateTest,
-  UpdateTestSuccess,
-  UpdateTestFail,
+  UpdateAccount,
+  UpdateAccountSuccess,
+  UpdateAccountFail,
 
-  DeleteTestById,
-  DeleteTestByIdSuccess,
-  DeleteTestByIdFail,
+  DeleteAccountById,
+  DeleteAccountByIdSuccess,
+  DeleteAccountByIdFail,
 
 
-} from './test.actions';
-import { Test } from './test.model';
-import { TestService } from './test.service';
+} from './account.actions';
+import { Account } from './account.model';
+import { AccountFetchService } from './account.service';
 
 @Injectable()
-export class TestEffects {
+export class AccountEffects {
   // ========================================= QUERY
   @Effect()
   query:  Observable<Action> = this.actions$
       .pipe(
-        ofType<QueryTest>(TestActionTypes.QueryTest),
+        ofType<QueryAccount>(AccountActionTypes.QueryAccount),
         switchMap(() => {
           return this.service.query();
         }),
@@ -49,7 +49,7 @@ export class TestEffects {
         map(action => {
           console.log(action.payload.doc.data())
           return {
-            type: `[Test] ${action.type}`,
+            type: `[Account] ${action.type}`,
             payload: {
               ...action.payload.doc.data(),
               id: action.payload.doc.id
@@ -57,7 +57,7 @@ export class TestEffects {
           };
         }),
         catchError(({ message }) =>
-          of(new QueryTestFail({ error: message }))
+          of(new QueryAccountFail({ error: message }))
         )
       )
 
@@ -65,12 +65,12 @@ export class TestEffects {
   @Effect()
   create: Observable<Action> = this.actions$
     .pipe(
-      ofType<CreateTest>(TestActionTypes.CreateTest),
+      ofType<CreateAccount>(AccountActionTypes.CreateAccount),
       exhaustMap((action) =>
-        this.service.create(action.payload.test).pipe(
-          map((test: Test) => new CreateTestSuccess({ result: test })),
+        this.service.create(action.payload.account).pipe(
+          map((account: Account) => new CreateAccountSuccess({ result: account })),
           catchError(({ message }) =>
-            of(new CreateTestFail({ error: message }))
+            of(new CreateAccountFail({ error: message }))
           )
         )
       )
@@ -79,19 +79,19 @@ export class TestEffects {
   @Effect()
   update: Observable<Action> = this.actions$
   .pipe(
-      ofType<UpdateTest>(TestActionTypes.UpdateTest),
+      ofType<UpdateAccount>(AccountActionTypes.UpdateAccount),
       exhaustMap((action) =>
-        this.service.update(action.payload.test).pipe(
-          map((test: Test) =>
-            new UpdateTestSuccess({
+        this.service.update(action.payload.account).pipe(
+          map((account: Account) =>
+            new UpdateAccountSuccess({
               update: {
-                id: test.id,
-                changes: test
-              } as Update<Test>
+                id: account.id,
+                changes: account
+              } as Update<Account>
             })
           ),
           catchError(({ message }) =>
-            of(new UpdateTestFail({ error: message }))
+            of(new UpdateAccountFail({ error: message }))
           )
         )
       )
@@ -101,12 +101,12 @@ export class TestEffects {
   @Effect()
   delete: Observable<Action> = this.actions$
   .pipe(
-      ofType<DeleteTestById>(TestActionTypes.DeleteTestById),
+      ofType<DeleteAccountById>(AccountActionTypes.DeleteAccountById),
       exhaustMap((action) =>
         this.service.deleteById(action.payload.id).pipe(
-          map((id: string) => new DeleteTestByIdSuccess({ id })),
+          map((id: string) => new DeleteAccountByIdSuccess({ id })),
           catchError(({ message }) =>
-            of(new DeleteTestByIdFail({ error: message }))
+            of(new DeleteAccountByIdFail({ error: message }))
           )
         )
       )
@@ -115,5 +115,5 @@ export class TestEffects {
 
 
 
-  constructor(private actions$: Actions, private service: TestService) {}
+  constructor(private actions$: Actions, private service: AccountFetchService) {}
 }

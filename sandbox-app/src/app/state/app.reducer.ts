@@ -5,10 +5,10 @@ import { storeFreeze } from 'ngrx-store-freeze';
 
 import { AppState } from './app.interfaces';
 import { environment } from '../../environments/environment';
-import { testReducer } from './test/test.reducer';
+import { accountReducer } from './account/account.reducer';
 
 export const appReducer: ActionReducerMap<AppState> = {
-  test: testReducer,
+  account: accountReducer,
   router: routerReducer
 };
 

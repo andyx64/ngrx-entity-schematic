@@ -15,15 +15,17 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
 import { appMetaReducers, appReducer } from './app.reducer';
 import { CustomRouterStateSerializer } from './state-utils';
 import { environment } from '../../environments/environment';
-import { TestEffects } from './test/test.effects';
+import { AccountEffects } from './account/account.effects';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
-    StoreRouterConnectingModule,
+    StoreRouterConnectingModule.forRoot({
+      serializer: CustomRouterStateSerializer
+    }),
     StoreModule.forRoot(appReducer, { metaReducers: appMetaReducers }),
-    EffectsModule.forRoot([TestEffects]),
+    EffectsModule.forRoot([AccountEffects]),
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, // firestore
     !environment.production ? StoreDevtoolsModule.instrument() : []

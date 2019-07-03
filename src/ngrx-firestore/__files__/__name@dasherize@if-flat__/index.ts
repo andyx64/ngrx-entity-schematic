@@ -1,9 +1,9 @@
-import { createFeatureSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import {
   <%= name %>Adapter,
-} from './<%= dasherize(name) %>.reducer';
-import { <%= classify(name) %>State } from './<%= dasherize(name) %>.reducer';
+} from './<%= name %>.reducer';
+import { <%= classify(name) %>State } from './<%= name %>.reducer';
 
 export const get<%= classify(name) %>State = createFeatureSelector<<%= classify(name) %>State>('<%= name %>');
 
@@ -14,3 +14,7 @@ export const {
   selectTotal: <%= name %>Count
 } = <%= name %>Adapter.getSelectors(get<%= classify(name) %>State);
 
+export const get<%= classify(name) %>ById = (id) => createSelector(
+  <%= name %>Entities,
+  (<%= name %>s) => <%= name %>s[id]
+);
