@@ -33,7 +33,7 @@ import {
 
 } from './<%= dasherize(name) %>.actions';
 import { <%= classify(name) %> } from './<%= dasherize(name) %>.model';
-import { <%= classify(name) %>DatabaseService } from './<%= dasherize(name) %>.service';
+import { <%= classify(name) %>DatabaseService } from './<%= dasherize(name) %>.database.service';
 
 @Injectable()
 export class <%= classify(name) %>Effects {
